@@ -204,8 +204,9 @@ def display_report(path, data, today_str, current_words):
     all_deltas = daily_delta(days, goal)
     delta_map = {d: (delta, gm) for d, delta, gm in all_deltas if delta is not None}
 
-    # Also add today if not yet saved
-    if today_str not in days and today_delta is not None:
+    # Use live word count for today's chart entry (overrides saved delta if today
+    # was already recorded mid-session, so Today line and chart always agree)
+    if today_delta is not None:
         delta_map[today_str] = (today_delta, today_delta >= goal)
 
     # Build list of last N days
