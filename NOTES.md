@@ -32,9 +32,25 @@ Streak showed 0 even when today met the goal, because today's words weren't in `
 - Goal persistence across sessions — `--goal` sets it in history.json for that target, but there's no global config; next run without `--goal` uses stored goal. Actually this IS implemented via `data["goal"]`.
 
 **v1.0.0 shipped criteria:**
-- [ ] Test on real writing files (not just tmp)
-- [ ] Install and run as `wcs`
-- [ ] Push to kithfoss GitHub
+- [x] Test on real writing files (not just tmp)
+- [x] Install and run as `wcs`
+- [x] Push to kithfoss GitHub
+
+## 2026-04-29 — Build day (Wed) + v1.0.0 ship
+
+**Real-use smoke test (4pm CT):**
+- Install confirmed: `bash install.sh` → `wcs` symlink at `~/.local/bin/wcs` ✓
+- Single-file count: 300 words counted correctly ✓
+- Directory scan: 482k words across workspace .md files ✓
+- Streak logic: 5-day injected history, streak=1 after gap (Tue miss) ✓
+- Bar chart scales correctly (max delta = floor at goal) ✓
+
+**Bug found and fixed:**
+Chart delta and "Today" line disagreed when today's entry was already saved and `--no-save` was used. The chart showed the previously-saved delta while the Today line showed the live delta (current_words minus yesterday). Fixed by always using live today_delta to update delta_map[today_str] rather than only adding it when today was unsaved.
+
+**GitHub:**
+- kithfoss/wordcount-streak repo created and v0.1 pushed during midday window
+- v1.0.0 pushed with chart/Today consistency fix
 
 ## Next
 
